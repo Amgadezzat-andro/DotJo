@@ -1,0 +1,17 @@
+/* Just to Truncate Text */
+.pmego{
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  h1{
+    margin-top: 45px;
+    margin-bottom: 20px;
+  }
+
+  .megopad{
+    margin-bottom: 20px;
+  }
