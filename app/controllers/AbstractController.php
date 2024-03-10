@@ -37,15 +37,14 @@ class AbstractController
 
     protected function _view()
     {
-        // ** There is no Contorller
+        // ** There is no Contorller 
         if ($this->_action == FrontController::NOT_FOUND_ACTION) {
             require_once(VIEWS_PATH . 'notfound' . DS . 'notfound.view.php');
         }
         // ** There is A Controller & Action
         else {
             $view = VIEWS_PATH . $this->_controller . DS . $this->_action . '.view.php';
-            if (file_exists($view)) {
-                
+            if (file_exists($view)) {                
                 $this->_template->setActionViewFile($view);
                 $this->_data = array_merge($this->_data);
                 $this->_template->setAppData($this->_data);

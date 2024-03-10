@@ -1,25 +1,20 @@
 <?php
 namespace PHPMVC\models;
 
-use PDO;
-use PHPMVC\lib\database\Database;
 
-class ArticleModel
+use PDO;
+
+class ArticleModel extends AbstractModel
 {
-    private $db;
+ 
     public $id;
     public $title;
     public $pic;
     public $desc;
     public $cat_id;
     public $pageNum;
+    protected $table_name = 'articles'; 
 
-    public function __construct()
-    {
-        $db = new Database();
-        $db->connect();
-        $this->db = $db->getPDO();
-    }
 
     public function getAll()
     {
@@ -47,14 +42,6 @@ class ArticleModel
     public function CountRows()
     {
         $stmt = $this->db->prepare("SELECT COUNT(*) as count FROM articles");
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
-    }
-
-    public function fetchArticleById($id)
-    {
-        $stmt = $this->db->prepare("SELECT * FROM articles WHERE id = :id");
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
@@ -87,15 +74,7 @@ class ArticleModel
 
     }
 
-    public function delete()
-    {
 
-        $stmt = $this->db->prepare("DELETE FROM articles WHERE id = :id");
-        $stmt->bindValue(':id', $this->id);
-        if ($stmt->execute()) {
-            return true;
-        }
-    }
 
 
 

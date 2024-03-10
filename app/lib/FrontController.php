@@ -9,7 +9,6 @@ class FrontController
     private $_controller = "index";
     private $_action = "default";
     private $_params = [];
-
     private $_template;
 
     public function __construct(Template $template)
@@ -21,7 +20,6 @@ class FrontController
    
     private function _parseURL()
     {
-        
         $url = explode('/', trim(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH), "/"), 3);
     
         if (isset($url[0]) && $url[0] !== '') {

@@ -8,11 +8,9 @@ class AutoLoad
     {
 
         $className = str_replace("PHPMVC", "", $className);
-
         $className = str_replace("\\", "/", $className);
-
         $className = $className . ".php";
-
+        
         if ((file_exists(APP_PATH . $className))) {
             require_once(APP_PATH . $className);
         }

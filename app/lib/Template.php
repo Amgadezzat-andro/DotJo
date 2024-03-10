@@ -21,7 +21,6 @@ class Template
     public function setAppData($data)
     {
         $this->_data = $data;
-
     }
     private function renderTemplateHeaderStart()
     {
@@ -44,7 +43,6 @@ class Template
             $parts = $this->_template_parts['template'];
             if (!empty($parts)) {
                 extract($this->_data);
-               
                 foreach ($parts as $partKey => $File) {
                     if ($partKey === ':view') {
                         require_once $this->_action_view;

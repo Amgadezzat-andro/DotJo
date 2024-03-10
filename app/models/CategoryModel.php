@@ -2,21 +2,13 @@
 namespace PHPMVC\models;
 
 use PDO;
-use PHPMVC\lib\database\Database;
 
-class CategoryModel
+class CategoryModel extends AbstractModel
 {
-    private $db;
+
     public $id;
     public $category_name;
-
-
-    public function __construct()
-    {
-        $db = new Database();
-        $db->connect();
-        $this->db = $db->getPDO();
-    }
+    protected $table_name = 'categories';
 
     public function getAll()
     {
@@ -25,13 +17,6 @@ class CategoryModel
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function fetchCategoryById($id)
-    {
-        $stmt = $this->db->prepare("SELECT * FROM categories WHERE id = :id");
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
-    }
 
     public function create()
     {
@@ -51,14 +36,15 @@ class CategoryModel
         }
     }
 
-    public function delete()
-    {
-        $stmt = $this->db->prepare("DELETE FROM categories WHERE id = :id");
-        $stmt->bindValue(':id', $this->id);
-        if ($stmt->execute()) {
-            return true;
-        }
-    }
+    // TODO: Make it Static 
+    // public static function getByID2($id)
+    // {
+    //     $stmt = self::$db->prepare("SELECT * FROM " . self::$table_name . " WHERE id = :id");
+    //     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    //     $stmt->execute();
+    //     return $stmt->fetchObject(__CLASS__);
+    // }
+
 
 
 

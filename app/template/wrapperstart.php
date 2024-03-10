@@ -11,9 +11,12 @@
         $uri_segments = explode('/', $uri_path);
         if($uri_segments[1]=='') echo "active";
         ?> " href="/">Home</a>
-      </li>
+      </li>     
       <li class="nav-item">
         <a class="nav-link <?php if($uri_segments[1]=='category') echo "active";?>" href="/category">Category</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <?php if($uri_segments[1]=='subcategory') echo "active";?>" href="/subcategory">SubCategories</a>
       </li>
       <li class="nav-item">
         <a class="nav-link <?php if($uri_segments[1]=='article') echo "active";?>" href="/article">Articles</a>

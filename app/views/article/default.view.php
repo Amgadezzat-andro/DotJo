@@ -18,8 +18,7 @@
             </h2>
             <form action="/article">
                 <div class="row g-3 my-4">
-                    <div class="col-auto">
-                        
+                    <div class="col-auto">                        
                             <select name="category_name" class="form-select" aria-label="Default select example">
                                 <option value="">Select Category</option>
                                 <?php
@@ -56,9 +55,9 @@
                 <div class="card h-100">
                     <?php
                     if ($article->article_pic == '') {
-                        echo " <img src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg' class='card-img-top' alt='...'>";
+                        echo " <img src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg' class='card-img-top luja' alt='...'>";
                     } else {
-                        echo "<img src='/upload/article_images/$article->article_pic' class='card-img-top' alt='...'>";
+                        echo "<img src='/upload/article_images/$article->article_pic' class='card-img-top luja' alt='...'>";
                     }
                     ?>
 
@@ -90,26 +89,34 @@
 </section>
 
 
+<!-- //! Pagination -->
 
 <nav aria-label="Page navigation example mt-5">
     <ul class="pagination justify-content-center mt-5">
         <?php
         if (!empty($articles)) {
+            // ** Article Numbers In Single Page 
             $article_num = count($articles);
+            // ** Get Request URL
             $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            // ** Make Segements
             $uri_segments = explode('/', $uri_path);
             ?>
-            <li class="page-item <?php if (empty($uri_segments[2]) || $uri_segments[3] == 0) {
-                echo "disabled";
-            } ?>">
-                <a class="page-link" href="/article/default/<?php echo $uri_segments[3] - 1 ?>" tabindex="-1"
-                    aria-disabled="true">Previous</a>
+            <!-- //** Previous Button -->
+            <li class="page-item <?php if (empty($uri_segments[2]) || $uri_segments[3] == 0) {echo "disabled";} ?>">
+                <a class="page-link" href="/article/default/<?php echo $uri_segments[3] - 1 ?>" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
-            <li class="page-item <?php if (empty($uri_segments[2]) || $uri_segments[3] == 0)
-                echo "disabled"; ?>"><a href="/article/" class="page-link">0</a></li>
+    
+            <li class="page-item <?php if (empty($uri_segments[2]) || $uri_segments[3] == 0) echo "disabled"; ?>">
+                <a href="/article/" class="page-link">0</a>
+            </li>
             <?php
+            // ** Get All Records Count
             $rowsCount = $rows_count->count;
-            $frac = $rowsCount / 3; // $frac -> 3.3
+            // **  $frac -> 3.3
+            $frac = $rowsCount / 3; 
+            // ** Two Conditions
+            // ! if Integer
             if (is_int($frac)) {
                 $helper = 0;
                 for ($x = 0; $x < $frac - 1; $x++) {
@@ -118,31 +125,29 @@
                     <li class="page-item<?php if ($uri_segments[3] == $x + 1)
                         echo " disabled" ?>"><a href="/article/default/<?php echo 1 + $x; ?>" class="page-link">
                             <?php echo 1 + $x; ?>
-                        </a></li>
+                        </a>
+                    </li>
                     <?php
                 }
             } else {
-                // 1 2 3 4
-                $frac = (int) $frac;
+            // ! if Fraction
+                $frac = (int) $frac; // 2
                 $helper = 0;
                 for ($x = 0; $x <= $frac - 1; $x++) {
                     $helper = $x+1;
                     ?>
-                    <li class="page-item <?php if ($uri_segments[3] == $x + 1)
-                        echo " disabled" ?> "><a href="/article/default/<?php echo 1 + $x; ?>" class="page-link">
-                            <?php echo 1 + $x; ?>
-                        </a></li>
+                    <li class="page-item <?php if ($uri_segments[3] == $x + 1) echo " disabled" ?> ">
+                        <a href="/article/default/<?php echo 1 + $x; ?>" class="page-link"> <?php echo 1 + $x; ?> </a>
+                    </li>
 
                     <?php
                 }
             }
 
             ?>
-
+            <!-- //! Next Button -->
             <li class="page-item <?php
-            if ($article_num <3 || $uri_segments[3] == $helper) {
-                echo "disabled";
-            } ?>">
+            if ($article_num <3 || $uri_segments[3] == $helper) {echo "disabled";} ?>">
                 <a class="page-link" href="/article/default/<?php 
                     if(empty($uri_segments[3])){echo 1; }
                     else{ echo $uri_segments[3] + 1 ;}?>">Next</a>

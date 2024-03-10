@@ -12,9 +12,9 @@
                 <div class="card h-100">
                     <?php
                     if ($article->article_pic == '') {
-                        echo " <img src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg' class='card-img-top' alt='...'>";
+                        echo " <img src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg' class='card-img-top luja2' alt='...'>";
                     } else {
-                        echo "<img src='/upload/article_images/$article->article_pic' class='card-img-top' alt='...'>";
+                        echo "<img src='/upload/article_images/$article->article_pic' class='card-img-top luja2' alt='...'>";
                     }
                     ?>
                     <div class="card-body">

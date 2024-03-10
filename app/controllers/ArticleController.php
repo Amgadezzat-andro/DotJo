@@ -82,12 +82,12 @@ class ArticleController extends AbstractController
         $art = new ArticleModel();
         $art->id = $id;
 
-        if (!$art->fetchArticleById($art->id)) {
+        if (!$art->getByID($art->id)) {
             $_SESSION['message'] = "Article Does not Exist";
             $this->redirect('/article');
         }
 
-        $this->_data['article'] = $art->fetchArticleById($id);
+        $this->_data['article'] = $art->getByID($id);
 
         if (isset($_POST['submit'])) {
 
@@ -149,13 +149,13 @@ class ArticleController extends AbstractController
 
 
         $art = new ArticleModel();
-        $art_to_delete = $art->fetchArticleById($id);
+        $art_to_delete = $art->getByID($id);
+
 
         if ($art_to_delete === false) {
             $this->redirect('/article');
         }
-        $art->id = $art_to_delete->id;
-
+        
         $image_name = $art_to_delete->article_pic;
 
 
@@ -168,7 +168,7 @@ class ArticleController extends AbstractController
             }
         }
 
-        if ($art->delete()) {
+        if ($art->delete($art_to_delete->id)) {
             $_SESSION['message'] = "Article , Deleted Successfully";
             $this->redirect('/article');
         }
@@ -183,12 +183,12 @@ class ArticleController extends AbstractController
         $art = new ArticleModel();
         $art->id = $id;
 
-        if (!$art->fetchArticleById($art->id)) {
+        if (!$art->getByID($art->id)) {
             $_SESSION['message'] = "Article Does not Exist";
             $this->redirect('/article');
         }
 
-        $this->_data['article'] = $art->fetchArticleById($id);
+        $this->_data['article'] = $art->getByID($id);
         return $this->_view();
     }
 

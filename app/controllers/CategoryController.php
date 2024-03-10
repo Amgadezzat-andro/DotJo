@@ -42,12 +42,12 @@ class CategoryController extends AbstractController
         $cat = new CategoryModel();
         $cat->id = $id;
 
-        if(!$cat->fetchCategoryById($cat->id)){
+        if(!$cat->getByID($cat->id)){
             $_SESSION['message'] = "Category Does not Exist";
             $this->redirect('/category');
         }
         
-        $this->_data['category'] =  $cat->fetchCategoryById($id); 
+        $this->_data['category'] =  $cat->getByID($id); 
         
         if (isset($_POST['submit'])) {
             $cat->category_name = $this->filterString($_POST['category_name']);
@@ -64,17 +64,15 @@ class CategoryController extends AbstractController
     {
         
         $id = $this->filterInteger($this->_params[0]);
-
         
         $cat = new CategoryModel();
-        $cat_to_delete = $cat->fetchCategoryById($id);
+        $cat_to_delete = $cat->getByID($id);
         
         if ($cat_to_delete === false) {
             $this->redirect('/category');
         }
-        $cat->id = $cat_to_delete->id;
-
-        if ($cat->delete()) {
+        
+        if ($cat->delete($cat_to_delete->id)) {
             $_SESSION['message'] = "Category , Deleted Successfully";
             $this->redirect('/category');
         }
