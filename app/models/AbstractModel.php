@@ -28,6 +28,7 @@ abstract class AbstractModel
         $stmt = $this->db->prepare("DELETE FROM $this->table_name WHERE id = :id");
         $stmt->bindValue(':id', $id);
         return $stmt->execute();
+        
     }
 
 

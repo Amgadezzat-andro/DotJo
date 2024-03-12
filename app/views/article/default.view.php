@@ -65,8 +65,11 @@
                         <h5 class="card-title">
                             <?= $article->article_title ?>
                         </h5>
-                        <h5 class="card-subtitle text-danger ">
+                        <h5 class="card-subtitle text-danger megopad2">
                         <?= $article->category_name ?>
+                        </h5>
+                        <h5 class="card-subtitle text-success ">
+                        <?= $article->subCatName ?>
                         </h5>
                         <p class="card-text pmego">
                             <?= $article->article_desc ?>

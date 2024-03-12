@@ -11,7 +11,7 @@ class SubcategoryModel extends AbstractModel
     public $category_id;
     protected $table_name = 'sub_category';
 
-    
+
 
     public function getAll()
     {
@@ -22,9 +22,10 @@ class SubcategoryModel extends AbstractModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-    public function getCategories()
+    public function getSubCategoriesByCategoryID($id)
     {
-        $stmt = $this->db->prepare("SELECT * FROM categories");
+        $stmt = $this->db->prepare("SELECT * FROM sub_category WHERE cat_id = :catID ");
+        $stmt->bindValue(':catID', $id);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }

@@ -64,6 +64,7 @@ class ArticleController extends AbstractController
             $art->pic = $image;
             $art->desc = $this->filterString($_POST['article_desc']);
             $art->cat_id = $this->filterInteger($_POST['cat_id']);
+            $art->scat_id = $this->filterInteger($_POST['scat_id']);
             if ($art->create()) {
                 $_SESSION['message'] = "Article , Created Successfully";
                 $this->redirect('/article');

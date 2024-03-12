@@ -75,14 +75,14 @@ class Template
                 }
             }
 
-            // // Generate Js Scripts
-            // $js = $resources['js'];
-            // if (!empty($js)) {
-            //     foreach ($js as $jsKey => $path) {
-            //         $output = '<script src ="' . $path . '"></script>';
-            //         echo $output . "\n";
-            //     }
-            // }
+            // Generate Js Scripts
+            $js = $resources['js'];
+            if (!empty($js)) {
+                foreach ($js as $jsKey => $path) {
+                    $output = '<script src ="' . $path . '"></script>';
+                    echo $output . "\n";
+                }
+            }
 
 
 

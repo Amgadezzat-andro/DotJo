@@ -6,32 +6,39 @@ use PDO;
 
 class ArticleModel extends AbstractModel
 {
- 
+
     public $id;
     public $title;
     public $pic;
     public $desc;
     public $cat_id;
+    public $scat_id;
     public $pageNum;
-    protected $table_name = 'articles'; 
+    protected $table_name = 'articles';
 
 
     public function getAll()
     {
-        $stmt = $this->db->prepare("SELECT articles.*,categories.category_name as category_name FROM articles 
-                                         INNER JOIN categories ON articles.cat_id = categories.id ORDER BY articles.id DESC LIMIT 3");
+        $stmt = $this->db->prepare("SELECT articles.*,categories.category_name as category_name , sub_category.name as subCatName
+                                         FROM articles
+                                         INNER JOIN categories ON articles.cat_id = categories.id
+                                         INNER JOIN sub_category ON articles.subcat_id = sub_category.id 
+                                         ORDER BY articles.id 
+                                         DESC LIMIT 3");
         if (!empty($_REQUEST['category_name'])) {
             $stmt = $this->db
-                ->prepare("SELECT articles.*,categories.category_name as category_name
+                ->prepare("SELECT articles.*,categories.category_name as category_name , sub_category.name as subCatName
                                         FROM articles 
-                                        INNER JOIN categories ON articles.cat_id = categories.id 
+                                        INNER JOIN categories ON articles.cat_id = categories.id
+                                        INNER JOIN sub_category ON articles.subcat_id = sub_category.id
                                         WHERE articles.cat_id =" . $_REQUEST['category_name']);
         }
         if (!empty($this->pageNum)) {
             $stmt = $this->db
-                ->prepare("SELECT articles.*,categories.category_name as category_name
+                ->prepare("SELECT articles.*,categories.category_name as category_name , sub_category.name as subCatName
                               FROM articles 
                               INNER JOIN categories ON articles.cat_id = categories.id
+                              INNER JOIN sub_category ON articles.subcat_id = sub_category.id 
                               ORDER BY articles.id DESC
                               LIMIT 3 OFFSET " . ($this->pageNum * 3));
         }
@@ -48,11 +55,12 @@ class ArticleModel extends AbstractModel
 
     public function create()
     {
-        $stmt = $this->db->prepare("INSERT INTO articles (article_title,article_pic,article_desc,cat_id) VALUES (:title, :pic, :desc, :cat_id)");
+        $stmt = $this->db->prepare("INSERT INTO articles (article_title,article_pic,article_desc,cat_id,subcat_id) VALUES (:title, :pic, :desc, :cat_id,:scat_id)");
         $stmt->bindValue(':title', $this->title);
         $stmt->bindValue(':pic', $this->pic);
         $stmt->bindValue(':desc', $this->desc);
         $stmt->bindValue(':cat_id', $this->cat_id);
+        $stmt->bindValue(':scat_id', $this->scat_id);
         if ($stmt->execute()) {
             return true;
         }
@@ -60,12 +68,13 @@ class ArticleModel extends AbstractModel
     }
     public function update()
     {
-        $stmt = $this->db->prepare("UPDATE articles SET article_title = :title , article_pic = :pic , article_desc = :desc, cat_id = :cat_id WHERE id = :id");
+        $stmt = $this->db->prepare("UPDATE articles SET article_title = :title , article_pic = :pic , article_desc = :desc, cat_id = :cat_id , subcat_id = :scat_id WHERE id = :id");
         $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
         $stmt->bindValue(':title', $this->title);
         $stmt->bindValue(':pic', $this->pic);
         $stmt->bindValue(':desc', $this->desc);
         $stmt->bindValue(':cat_id', $this->cat_id);
+        $stmt->bindValue(':scat_id', $this->scat_id);
         $stmt->execute();
         if ($stmt->execute()) {
             return true;
