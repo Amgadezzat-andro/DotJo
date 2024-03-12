@@ -92,6 +92,9 @@ class SubcategoryController extends AbstractController
     {
         if (isset($_GET['var1'])) {
             $category_id = $_GET['var1'];
+            if (isset($_GET['var2'])) {
+                $scategory_id = $_GET['var2'];
+            }
             $cat = new SubcategoryModel();
             $scategories = $cat->getSubCategoriesByCategoryID($category_id);
             echo <<<'MEGODOC'
@@ -101,7 +104,11 @@ class SubcategoryController extends AbstractController
         MEGODOC;
             echo "<option value='{$scategories[0]->id}'>Click To Choose Sub Categorires</option>";
             foreach ($scategories as $scategory):
-                echo "<option value='$scategory->id'>$scategory->name</option>";
+                if ($scategory->id == $scategory_id) {
+                    echo "<option value='$scategory->id' selected >$scategory->name</option>";
+                } else {
+                    echo "<option value='$scategory->id'>$scategory->name</option>";
+                }
             endforeach;
             echo <<<'MEGODOC'
        </select>

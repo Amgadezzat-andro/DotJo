@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label for="articleDescription">Description</label>
                     <textarea name="article_desc" class="form-control" id="articleDescription" rows="3"
-                        placeholder="Enter article description"><?=$article->article_desc?></textarea>
+                        placeholder="Enter article description"><?= $article->article_desc ?></textarea>
                 </div>
 
                 <!-- Article Category -->
@@ -35,14 +35,20 @@
                     <select name="cat_id" class="form-control" id="articleCategory">
                         <?php
                         foreach ($categories as $category):
-                            if($category->id == $article->cat_id){
+                            if ($category->id == $article->cat_id) {
                                 echo "<option value='$category->id' selected >$category->category_name</option>";
+                            } else {
+                                echo "<option value='$category->id'>$category->category_name</option>";
                             }
-                            echo "<option value='$category->id'>$category->category_name</option>";
                         endforeach;
                         ?>
                     </select>
                 </div>
+                <!-- Article Sub Category -->
+                <div id="subCatID" class="form-group">
+                    <p>Sub Categories Data</p>
+                </div>
+                <br>
 
                 <!-- Submit Button -->
                 <input name="submit" type="submit" class="btn btn-primary" value="Save">
@@ -50,3 +56,36 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'https://dotjo.test/subcategory/getsubcategories',
+            data: {
+                var1: $('#articleCategory').val(),
+                var2: <?php echo $article->subcat_id ?>,
+            },
+            success: function (data) {
+                $('#subCatID').html(data);
+            },
+            type: 'GET',
+        });
+        $('#articleCategory').on('change', function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: 'https://dotjo.test/subcategory/getsubcategories',
+                data: {
+                    var1: $(this).val(),
+                    var2: <?php echo $article->subcat_id ?>,
+                },
+                success: function (data) {
+                    $('#subCatID').html(data);
+                },
+                type: 'GET',
+            });
+        });
+    });
+
+
+
+</script>

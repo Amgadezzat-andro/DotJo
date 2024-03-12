@@ -75,6 +75,10 @@ class CategoryController extends AbstractController
         if ($cat->delete($cat_to_delete->id)) {
             $_SESSION['message'] = "Category , Deleted Successfully";
             $this->redirect('/category');
+        } 
+        else{
+            $_SESSION['message'] = "Some Error Happend, Theese Category May Still Has Sub Categories ";
+            $this->redirect('/category');
         }
 
 
